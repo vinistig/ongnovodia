@@ -8,6 +8,8 @@ class InscricaoController {
 
     new(req, res) {
 		let body = req.body
+         var date = Date()
+        body.data_inscricao = this.formatDate(date)
         let inscricao = new Inscricao()
 		inscricao.novaInscricao(body)
 		.then(saved => res.status(200).json(saved))
@@ -39,6 +41,18 @@ class InscricaoController {
 			.then(edited => res.status(200).json(edited))
 			.catch(err => ErrorHandler.toRequest(err, res))
 	}
+
+    formatDate(date) {
+        var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 }
 
 module.exports = InscricaoController;
