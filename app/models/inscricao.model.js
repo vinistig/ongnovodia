@@ -39,7 +39,7 @@ const schema = new Schema({
     termo_imagem    : {type: Boolean, required: true, default: false},
     termo_responsabilidade: {type: Boolean, required: true, default: false},
     data_inscricao  : {type: String, required: true},
-    image           : {type: String, required: true}
+    image           : {type: String}
 })
 
 /**
