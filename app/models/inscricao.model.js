@@ -34,7 +34,7 @@ const schema = new Schema({
     cep             : {type: String, required: true},
     cidade          : {type: String, required: true},
     estado          : {type: String, required: true},
-    projeto         : {type: String, required: true},
+    projetos        : [{type: String, required: true}],
     atendido_por    : {type: String, required: true},
     termo_imagem    : {type: Boolean, required: true, default: false},
     termo_responsabilidade: {type: Boolean, required: true, default: false},
