@@ -21,7 +21,7 @@ const schema = new Schema({
     deficiente      : {type: Boolean, required: true, default: false},
     encaminhado_por : {type: String, required: true},
     nome_responsavel: {type: String},
-    rg              : {type: String, required: true},
+    rg              : {type: String, required: true, unique:true},
     orgao_emissor   : {type: String, required: true},
     rg_data         : {type: String, required: true},
     cpf             : {type: String},
