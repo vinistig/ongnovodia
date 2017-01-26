@@ -18,7 +18,7 @@ class InscricaoController {
 
     get(req, res) {
 		let doc = req.params.documento
-        console.log(doc)
+        //console.log(doc)
         Inscricao.getInscricaoByDoc(doc)
         .then(result => res.status(200).json(result))
         .catch(err => ErrorHandler.toRequest(err, res))

@@ -50,7 +50,7 @@ return new Promise((resolve, reject) => {
 
     Object.assign(this, body)
 
-    console.log(this)
+    //console.log(this)
 
     // this.nome =  body.nome
     // this.nome_pai =  body.nome_pai
