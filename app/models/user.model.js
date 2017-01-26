@@ -40,12 +40,13 @@ return new Promise((resolve, reject) => {
 				var res = {};
 				res.name = result.name
 				res.username = result.username
+				res.isAdmin = result.isAdmin
 				resolve(res)
 			} else{
-				reject({"erro":401,"message":"INVALID_PASSWORD"})
+				reject({"erro":401,"message":"SENHA_INVÁLIDA"})
 			}
 		} else {
-			reject({"erro":401,"message":"INVALID_USERNAME"})
+			reject({"erro":401,"message":"USUÁRIO_INVÁLIDO"})
 		}
 	}).catch(err => reject(err))
 })
