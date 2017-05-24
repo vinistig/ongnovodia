@@ -3,7 +3,7 @@ class Status {
 	constructor() {}
 
 	index(req, res) {
-		res.status(200).json({quem: "maria"})
+		res.status(200).json({quem: "its alive"})
 	}
 }
 

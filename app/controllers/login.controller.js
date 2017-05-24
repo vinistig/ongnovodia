@@ -1,7 +1,5 @@
 const User        = apprequire('models/user.model.js')
 const Session     = apprequire('models/session.model.js')
-const Group       = apprequire('models/group.model')
-const Channel     = apprequire('models/channel.model')
 const Errors      = apprequire('helpers/errors.helper')
 const ErrorHandler = apprequire('helpers/error-handler.helper')
 
@@ -74,97 +72,6 @@ class LoginController {
 		.catch(err => ErrorHandler.toRequest(err, res))
 	}
 
-
-	/* private */
-
-
-	_canAdmin(user) {
-	return new Promise((resolve, reject) => {
-		if(user.isAdmin) return resolve(user)
-
-		Promise.all([
-			Group.find({ owners: user }).exec(),
-			Channel.find({ managers: user }).exec()
-		]).then(query => {
-			let groups = query[0]
-			let channels = query[1]
-
-			if(groups.length > 0 || channels.length > 0) resolve(user)
-			else reject(new Errors.Unauthorized())
-		})
-		.catch(err => reject(err))
-	});
-	}
-
-	_canLoginToApp(user) {
-	return new Promise((resolve, reject) => {
-		Promise.all([
-			Group.find({ members: user }),
-			Group.find({ tempUsers: user })
-		])
-		.then(query => {
-			let groupsIsMember = query[0]
-			let groupsIsTemp   = query[1]
-			let promises       = []
-
-			if(groupsIsMember.length === 0 && groupsIsTemp.length === 0)
-				return false
-
-			if(groupsIsTemp.length > 0)
-				promises.push(this._promoteTempUsers(groupsIsTemp, groupsIsMember, user))
-
-			return promises
-		})
-		.then(hasPermission => {
-			if(!hasPermission) reject(new Errors.Unauthorized('YOU_DONT_HAVE_ANY_GROUPS'))
-			else resolve()
-		})
-		.catch(err => reject(err))
-	});
-	}
-
-	_canLogin(user) {
-	return new Promise((resolve, reject) => {
-		Promise.all([
-			Group.find({ members: user }),
-			Group.find({ tempUsers: user })
-		])
-		.then(query => {
-			let groupsIsMember = query[0]
-			let groupsIsTemp   = query[1]
-			let promises       = []
-
-			if(groupsIsMember.length === 0 && groupsIsTemp.length === 0)
-				return false
-
-			if(groupsIsTemp.length > 0)
-				promises.push(this._promoteTempUsers(groupsIsTemp, groupsIsMember, user))
-
-			return promises
-		})
-		.then(hasPermission => {
-			if(!hasPermission) reject(new Errors.Unauthorized('YOU_DONT_HAVE_ANY_GROUPS'))
-			else resolve()
-		})
-		.catch(err => reject(err))
-	});
-	}
-
-	_promoteTempUsers(groupsIsTemp, groupsIsMember, user) {
-		let promotes = []
-		let groupsIsMemberIds = groupsIsMember.map(g => g._id.toString())
-
-		for (let group of groupsIsTemp) {
-			let groupId = group._id.toString()
-
-			if(groupsIsMemberIds.indexOf(groupId) > -1)
-				promotes.push(Group.removeFromTemp(group, user.email))
-			else
-				promotes.push(Group.promoteFromTemp(group, user))
-		}
-
-		return Promise.all(promotes)
-	}
 }
 
 module.exports = LoginController;

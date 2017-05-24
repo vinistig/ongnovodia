@@ -8,12 +8,14 @@ const Schema   = mongoose.Schema
 const ObjectID = Schema.ObjectId
 const objectId = mongoose.Types.ObjectId
 
-const Faces       = require('ibm-bluemix-faces')
-const Group       = apprequire('models/group.model')
-const Channel     = apprequire('models/channel.model')
+// const Faces       = require('ibm-bluemix-faces')
+
+// const Group       = apprequire('models/group.model')
+
+// const Channel     = apprequire('models/channel.model')
 const Errors      = apprequire('helpers/errors.helper')
-const hasObjectId = apprequire('helpers/has-object-id.helper')
-const Kaltura     = apprequire('models/kaltura.model')
+// const hasObjectId = apprequire('helpers/has-object-id.helper')
+// const Kaltura     = apprequire('models/kaltura.model')
 
 /* model schema */
 

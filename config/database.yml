@@ -9,14 +9,14 @@ deafault: &default
 production:
   <<: *default
   uri: {{ process.env.MONGODB_URI }}
-  
+
 
 development:
   <<: *default
   uri: mongodb://localhost/
-  name: share2win_dev
+  name: ongonovodia_dev
 
 test:
   <<: *default
   uri: mongodb://localhost/
-  name: share2win_test
+  name: ongonovodia_test

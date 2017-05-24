@@ -1,6 +1,6 @@
 const Config = apprequire('models/config.model')
 const Promise_serial = require('promise-serial')
-const Group = apprequire('models/group.model')
+// const Group = apprequire('models/group.model')
 const User = apprequire('models/user.model')
 
 let versions = [ v0 ]
